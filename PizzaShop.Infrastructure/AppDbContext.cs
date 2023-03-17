@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Domain.Interfaces;
+using PizzaShop.Infrastructure.Entity.TypeConfiguration;
 
 namespace PizzaShop.Infrastructure
 {
@@ -16,6 +17,11 @@ namespace PizzaShop.Infrastructure
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.ApplyConfigurationsFromAssembly(typeof(PizzaConfiguration).Assembly);
+            builder.ApplyConfigurationsFromAssembly(typeof(OrderConfiguration).Assembly);
+            builder.ApplyConfigurationsFromAssembly(typeof(OrderItemConfiguration).Assembly);
+            builder.ApplyConfigurationsFromAssembly(typeof(IngredientConfiguration).Assembly);
+           
             base.OnModelCreating(builder);
         }
         
