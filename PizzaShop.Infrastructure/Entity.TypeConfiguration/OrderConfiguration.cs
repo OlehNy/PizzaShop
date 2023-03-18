@@ -11,6 +11,11 @@ namespace PizzaShop.Infrastructure.Entity.TypeConfiguration
             builder.HasKey(order => order.Id);
             builder.HasIndex(order => order.Id).IsUnique();
             builder.Property(order => order.ShippingAddress).HasMaxLength(250);
+
+            builder.HasMany(o => o.OrderItems)
+               .WithOne(oi => oi.Order)
+               .HasForeignKey(oi => oi.OrderId)
+               .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

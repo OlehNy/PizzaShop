@@ -11,6 +11,6 @@ namespace PizzaShop.Domain.Entities
         public decimal Price { get; set; }
         public Category Category { get; set; }
 
-        public ICollection<Ingredient>? Ingredients { get; set; }
+        public ICollection<PizzaIngredient>? PizzaIngredients { get; set; }
     }
 }

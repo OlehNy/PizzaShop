@@ -10,6 +10,14 @@ namespace PizzaShop.Infrastructure.Entity.TypeConfiguration
         {
             builder.HasKey(orderItem => orderItem.Id);
             builder.HasIndex(orderItem => orderItem.Id).IsUnique();
+
+            builder.HasOne(oi => oi.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(oi => oi.OrderId);
+
+            builder.HasOne(oi => oi.Pizza)
+                .WithMany()
+                .HasForeignKey(oi => oi.PizzaId);
         }
     }
 }
