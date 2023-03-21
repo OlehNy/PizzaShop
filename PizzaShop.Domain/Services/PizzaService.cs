@@ -1,6 +1,7 @@
 ﻿using PizzaShop.Domain.Interfaces;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Domain.Enum;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaShop.Domain.Services
 {
@@ -14,7 +15,9 @@ namespace PizzaShop.Domain.Services
         }
 
         public IEnumerable<Pizza> GetPizzas()
-            => _dbContext.Pizzas;
+            => _dbContext.Pizzas
+            .Include(pizza => pizza.PizzaIngredients)
+                .ThenInclude(pz => pz.Ingredient);
 
         public async Task CreatePizzaAsync(Pizza pizza)
         {
@@ -56,6 +59,41 @@ namespace PizzaShop.Domain.Services
             var pizzas = _dbContext.Pizzas;
             var filtredPizzas = pizzas.Where(pizza => pizza.Category == category);
             return filtredPizzas;
+        }
+
+        public async Task AddIngredientToPizza(Pizza pizza, Ingredient ingredient)
+        {
+            if (ingredient == null)
+            {
+                throw new ArgumentNullException(nameof(ingredient));
+            }
+
+            await _dbContext.PizzaIngredients.AddAsync(new PizzaIngredient()
+            {
+                IngredientId = ingredient.Id,
+                PizzaId = pizza.Id
+            });
+            await _dbContext.SaveChangesAsync(CancellationToken.None);
+        }
+
+        public async Task AddIngredientToPizza(Pizza pizza, IEnumerable<Ingredient> ingredients)
+        {
+            if (ingredients == null)
+            {
+                throw new ArgumentNullException(nameof(ingredients));
+            }
+
+            List<PizzaIngredient> pizzaIngredients = new List<PizzaIngredient>();
+            foreach (var item in ingredients)
+            {
+                pizzaIngredients.Add(new PizzaIngredient()
+                {
+                    IngredientId = item.Id,
+                    PizzaId = pizza.Id
+                });
+            }
+            await _dbContext.PizzaIngredients.AddRangeAsync(pizzaIngredients);
+            await _dbContext.SaveChangesAsync(CancellationToken.None);
         }
     }
 }

@@ -10,5 +10,7 @@ namespace PizzaShop.Domain.Interfaces
         Task CreatePizzaAsync(Pizza pizza);
         Task DeletePizzaAsync(int id);
         Task UpdatePizzaAsync(Pizza pizza);
+        Task AddIngredientToPizza(Pizza pizza, Ingredient ingredient);
+        Task AddIngredientToPizza(Pizza pizza, IEnumerable<Ingredient> ingredients);
     }
 }
