@@ -9,7 +9,6 @@ namespace PizzaShop.Infrastructure.Entity.TypeConfiguration
         public void Configure(EntityTypeBuilder<Ingredient> builder)
         {
             builder.HasKey(ingredient => ingredient.Id);
-            builder.HasIndex(ingredient => ingredient.Id).IsUnique();
             builder.Property(ingredient => ingredient.Name).HasMaxLength(50);
         }
     }

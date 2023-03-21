@@ -9,7 +9,6 @@ namespace PizzaShop.Infrastructure.Entity.TypeConfiguration
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasKey(order => order.Id);
-            builder.HasIndex(order => order.Id).IsUnique();
             builder.Property(order => order.ShippingAddress).HasMaxLength(250);
 
             builder.HasMany(o => o.OrderItems)
