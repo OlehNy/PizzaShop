@@ -9,6 +9,7 @@ namespace PizzaShop.Domain.Interfaces
         DbSet<Ingredient> Ingredients { get; set; }
         DbSet<Order> Orders { get; set; }
         DbSet<OrderItem> OrderItems { get; set; }
+        DbSet<PizzaIngredient> PizzaIngredients { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }
 }
