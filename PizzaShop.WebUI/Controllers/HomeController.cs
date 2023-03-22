@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PizzaShop.WebUI.Models;
 using System.Diagnostics;
+using PizzaShop.Domain.Interfaces;
+using PizzaShop.Domain.Entities;
+using AutoMapper;
 
 namespace PizzaShop.WebUI.Controllers
 {
@@ -18,7 +21,7 @@ namespace PizzaShop.WebUI.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
         {
             return View();
         }

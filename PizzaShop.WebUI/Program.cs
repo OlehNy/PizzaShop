@@ -1,7 +1,13 @@
+using PizzaShop.Domain;
+using PizzaShop.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDomain();
+builder.Services.AddInfrastructure();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
