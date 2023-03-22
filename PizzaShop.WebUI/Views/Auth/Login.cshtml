@@ -1,0 +1,24 @@
+﻿@model PizzaShop.Models.LoginViewModel
+<div class="row">
+	<div class="col-md-4">
+		<form asp-controller="Auth" asp-action="Login" method="post">
+			<div>Login</div>
+			<div class="form-group">
+				<label>Username</label>
+				<input asp-for="Username" />
+				<span aps-validation-for="Username"></span>
+			</div>
+			<div class="form-group">
+				<label>Password</label>
+				<input asp-for="Password" />
+				<span aps-validation-for="Password"></span>
+			</div>
+			<div>
+				<button type="submit" class="btn-block btn-lg mt-3">Sign In</button>
+			</div>
+			<a asp-controller="Auth" asp-action="Register"
+			   class="switch-button">Register</a>
+		</form>
+	</div>
+</div>
+

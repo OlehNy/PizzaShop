@@ -18,4 +18,9 @@
     <ProjectReference Include="..\PizzaShop.Infrastructure\PizzaShop.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PizzaShop.Domain\PizzaShop.Domain.csproj" />
+    <ProjectReference Include="..\PizzaShop.Infrastructure\PizzaShop.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
