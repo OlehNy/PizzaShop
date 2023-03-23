@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PizzaShop.Models
+namespace PizzaShop.WebUI.Models
 {
     public class LoginViewModel
     {
