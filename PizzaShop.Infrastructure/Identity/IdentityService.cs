@@ -42,21 +42,6 @@ namespace PizzaShop.Infrastructure.Identity
             return user.Id;
         }
 
-        public Task DeleteUserAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<string?> GetUserNameAsync(string userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsInRoleAsync(string userId, string role)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task Logout()
         {
             await _signInManager.SignOutAsync();
