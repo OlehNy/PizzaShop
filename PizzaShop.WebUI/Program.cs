@@ -1,5 +1,5 @@
-using PizzaShop.Infrastructure;
 using PizzaShop.Domain;
+using PizzaShop.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +25,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
