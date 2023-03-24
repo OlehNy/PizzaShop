@@ -14,7 +14,8 @@ namespace PizzaShop.WebUI.Mappings
                 .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
                 .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.ImageUrl))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => 
-                    string.Join(", ", src.PizzaIngredients.Select(x => x.Ingredient.Name))));
+                    string.Join(", ", src.PizzaIngredients.Select(x => x.Ingredient.Name))))
+                .ReverseMap();
         }
     }
 }

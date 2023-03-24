@@ -1,0 +1,35 @@
+﻿@model IEnumerable<PizzaShop.Domain.Entities.Order>
+@{
+	ViewData["Title"] = "Orders History";
+}
+
+@if (Model.Any())
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">OrderID</th>
+				<th scope="col">Total Price</th>
+				<th scope="col">Order Date</th>
+				<th scope="col">ShippingAddress</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (var order in Model)
+			{
+				<tr>
+					<td>@order.Id</td>
+					<td>@order.TotalPrice</td>
+					<td>@order.OrderDate</td>
+					<td>@order.ShippingAddress</td>
+				</tr>
+			}
+
+		</tbody>
+	</table>
+}
+else
+{
+	<p>History is empty</p>
+}
