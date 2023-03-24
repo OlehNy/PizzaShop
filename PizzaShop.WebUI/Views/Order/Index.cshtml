@@ -1,5 +1,66 @@
-﻿@{
+﻿@model PizzaShop.Domain.Entities.Order
+@{
 	ViewData["Title"] = "Orders";
 }
 
-<h1>Orders</h1>
+<h1>Order</h1>
+@if (Model != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">Pizza Name</th>
+				<th scope="col">Quantity</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var orderItem in Model.OrderItems)
+			{
+				<tr>
+					<td>@orderItem.Pizza.Name</td>
+					<td>@orderItem.Quantity</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	<p>Total price: @Model.TotalPrice</p>
+	<button id="open-modal-button" type="submit" class="btn btn-success">Confirm</button>
+	<form asp-action="DeleteOrder" asp-controller="Order" asp-route-id="@Model.Id" method="post">
+		<button type="submit" class="btn btn-danger">Delete</button>
+	</form>
+
+}
+else
+{
+	<p>Add some product</p>
+}
+
+<form asp-action="OrderHistory" asp-controller="Order" method="get">
+	<button type="submit" class="btn btn-primary">Order History</button>
+</form>
+
+<div id="modal-dialog" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0, 0, 0, 0.5);">
+	<div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px;">
+		<form asp-action="PayOrder" asp-controller="Order" asp-route-id="@Model?.Id" method="post">
+			<label for="shippingAddress">Shipping Address:</label>
+			<input type="text" name="shippingAddress"><br>
+			<button type="submit">Pay Order</button>
+		</form>
+		<button id="close-modal-button">Close</button>
+	</div>
+</div>
+
+<script>
+	const openModalButton = document.getElementById("open-modal-button");
+	const closeModalButton = document.getElementById("close-modal-button");
+	const modalDialog = document.getElementById("modal-dialog");
+
+	openModalButton.addEventListener("click", () => {
+		modalDialog.style.display = "block";
+	});
+
+	closeModalButton.addEventListener("click", () => {
+		modalDialog.style.display = "none";
+	});
+
+</script>

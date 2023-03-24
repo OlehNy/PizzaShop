@@ -11,5 +11,6 @@ namespace PizzaShop.Domain.Entities
         public Category Category { get; set; }
 
         public ICollection<PizzaIngredient>? PizzaIngredients { get; set; }
+        public ICollection<OrderItem>? OrderItems{ get; set; }
     }
 }
