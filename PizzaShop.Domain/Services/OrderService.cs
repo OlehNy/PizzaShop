@@ -22,7 +22,7 @@ namespace PizzaShop.Domain.Services
                 await _dbContext.SaveChangesAsync(CancellationToken.None);
             }
 
-            Order order = _dbContext.Orders.Last(order => !order.IsPaid);
+            Order order = _dbContext.Orders.OrderByDescending(order => !order.IsPaid).First();
 
             var orderItem = new OrderItem()
             {
@@ -58,7 +58,6 @@ namespace PizzaShop.Domain.Services
         public IEnumerable<Order> GetAllOrders(string userId)
         {
             var orders = _dbContext.Orders
-                .AsQueryable()
                 .Where(order => order.UserId == userId)
                 .Include(order => order.OrderItems)
                     .ThenInclude(oi => oi.Pizza);
@@ -76,6 +75,25 @@ namespace PizzaShop.Domain.Services
             }
 
             _dbContext.Orders.Remove(order);
+            await _dbContext.SaveChangesAsync(CancellationToken.None);
+        }
+
+        public async Task DeleteOrderItemFromOrder(int orderId, int id)
+        {
+            var orderWithOrderItems = await _dbContext.Orders.
+                Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.Id == orderId);
+
+            if (orderWithOrderItems.OrderItems?.Count == 1 || orderWithOrderItems.OrderItems == null)
+			{
+                _dbContext.Orders.Remove(orderWithOrderItems);
+                await _dbContext.SaveChangesAsync(CancellationToken.None);
+                return;
+            }
+
+            var orderItem = await _dbContext.OrderItems.FindAsync(id);
+            orderWithOrderItems.OrderItems?.Remove(orderItem);
+
             await _dbContext.SaveChangesAsync(CancellationToken.None);
         }
     }

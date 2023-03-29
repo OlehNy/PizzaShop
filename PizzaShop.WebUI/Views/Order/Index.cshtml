@@ -19,6 +19,13 @@
 				<tr>
 					<td>@orderItem.Pizza.Name</td>
 					<td>@orderItem.Quantity</td>
+					<td>
+						<form asp-action="DeleteOrderItem" asp-controller="Order" method="post">
+							<input type="hidden" name="orderId" value="@Model.Id" />
+							<input type="hidden" name="id" value="@orderItem.Id" />
+							<button type="submit" class="btn btn-danger"><i class="fas fa-minus"></i></button>
+						</form>
+					</td>
 				</tr>
 			}
 		</tbody>

@@ -4,6 +4,7 @@ using PizzaShop.Domain.Interfaces;
 using PizzaShop.Domain.Entities;
 using PizzaShop.WebUI.Models;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PizzaShop.WebUI.Controllers
 {
@@ -40,7 +41,7 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _orderService.PayOrder(id, shippingAddress);
 
-            return RedirectToAction("OrderHistory");
+            return RedirectToAction(nameof(OrderHistory));
         }
 
         [HttpPost]
@@ -49,7 +50,7 @@ namespace PizzaShop.WebUI.Controllers
             var pizza = _pizzaService.GetPizzas().FirstOrDefault(pizza => pizza.Id == pizzaId);
             await _orderService.AddOrderItemAsync(UserId.ToString(), pizza, quantity);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -57,7 +58,15 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _orderService.DeleteOrderAsync(id);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteOrderItem(int orderId, int id)
+        {
+            await _orderService.DeleteOrderItemFromOrder(orderId, id);
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
