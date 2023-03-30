@@ -5,26 +5,30 @@
 
 <h1>Pizzas</h1>
 <div>
-	@foreach (var item in Model)
-	{
-		<div class="card mb-2">
-			<div class="row no-gutters">
-				<div class="col-md-3">
-					<img src="@item.ImageUrl" class="card-img" alt="Pizza">
-				</div>
-				<div class="col-md-5">
-					<div class="card-body">
-						<h5 class="card-title">@item.Name</h5>
-						<p class="card-text">@item.Description</p>
-						<p class="card-text"><small class="text-muted">Price: $@item.Price</small></p>
-						<a asp-controller="Pizza" asp-route-Id="@item.Id" asp-action="Details" class="btn btn-primary mx-2">
-							<i class="fas fa-edit">Details</i>
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	}
+	<div class="btn-group" role="group">
+		<button value="Seafood" type="button" class="btn btn-secondary" onclick="categoryFilter(this.value)">Seafood</button>
+		<button value="Meat" type="button" class="btn btn-secondary" onclick="categoryFilter(this.value)">Meat</button>
+		<button value="Vegetable" type="button" class="btn btn-secondary" onclick="categoryFilter(this.value)">Vegetable</button>
+		<button value="Cheese" type="button" class="btn btn-secondary" onclick="categoryFilter(this.value)">Cheese</button>
+	</div>
+	<div id="pizzaList">
+		@await Html.PartialAsync("_PizzaList", Model)
+	</div>
 
 </div>
 
+<script>
+	function categoryFilter(category) {
+		$.ajax({
+			url: "/Pizza/Index?category=" + category,
+			type: "GET",
+			contentType: 'application/json',
+			success: function(response) {
+				$('#pizzaList').html(response);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				alert("Error");
+			}
+		});
+	}
+</script>

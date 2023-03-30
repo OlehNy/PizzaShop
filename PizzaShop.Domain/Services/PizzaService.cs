@@ -54,7 +54,7 @@ namespace PizzaShop.Domain.Services
             await _dbContext.SaveChangesAsync(CancellationToken.None);
         }
 
-        public IEnumerable<Pizza> GetPizzasByCategory(Category category)
+        public IEnumerable<Pizza> GetPizzasByCategory(Category? category)
         {
             var pizzas = _dbContext.Pizzas;
             var filtredPizzas = pizzas.Where(pizza => pizza.Category == category);
@@ -94,6 +94,28 @@ namespace PizzaShop.Domain.Services
             }
             await _dbContext.PizzaIngredients.AddRangeAsync(pizzaIngredients);
             await _dbContext.SaveChangesAsync(CancellationToken.None);
+        }
+
+        public async Task<Pizza> GetPizzaByIdAsync(int id)
+        {
+            var pizza = await _dbContext.Pizzas.FindAsync(id);
+
+            if (pizza == null)
+            {
+                throw new ArgumentNullException(nameof(pizza));
+            }
+
+            return pizza;
+        }
+
+        public async Task<IReadOnlyList<Pizza>> GetTopThreePizzas()
+        {
+            var pizzaSales = _dbContext.OrderItems.GroupBy(oi => oi.Pizza)
+                                       .Select(g => new { PizzaObj = g.Key, SalesCount = g.Sum(oi => oi.Quantity) })
+                                       .OrderByDescending(p => p.SalesCount)
+                                       .Take(3);
+
+            return await pizzaSales.Select(p => p.PizzaObj).ToListAsync();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PizzaShop.Domain.Interfaces;
+using PizzaShop.Domain.Enum;
 using PizzaShop.WebUI.Models;
 using AutoMapper;
 
@@ -16,16 +17,24 @@ namespace PizzaShop.WebUI.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public IActionResult Index([FromQuery] Category? category)
         {
+            if (category != null)
+			{
+                var filterdPizzas = _service.GetPizzasByCategory(category)
+                    .Select(pizza => _mapper.Map<PizzaViewModel>(pizza));
+                
+                return PartialView("_PizzaList", filterdPizzas);
+            }
+
             var pizzas = _service.GetPizzas();
             var models = pizzas.Select(pizza => _mapper.Map<PizzaViewModel>(pizza));
             return View(models);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var pizza = _service.GetPizzas().FirstOrDefault(x => x.Id == id);
+            var pizza = await _service.GetPizzaByIdAsync(id);
             var model = _mapper.Map<PizzaViewModel>(pizza);
             return View(model);
         }
