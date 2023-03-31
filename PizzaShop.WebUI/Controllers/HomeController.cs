@@ -10,15 +10,30 @@ namespace PizzaShop.WebUI.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IPizzaService _pizzaService;
+        private readonly IReviewService _reviewService;
+        private readonly IMapper _mapper;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+            IPizzaService service,
+            IMapper mapper,
+            IReviewService reviewService)
         {
             _logger = logger;
+            _pizzaService = service;
+            _mapper = mapper;
+            _reviewService = reviewService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var topPizzas = (await _pizzaService.GetTopThreePizzas())
+                .Select(x => _mapper.Map<PizzaViewModel>(x));
+
+            var reviews = _reviewService.GetReviews();
+            ViewBag.Reviews = reviews;
+
+            return View(topPizzas);
         }
 
         public IActionResult About()

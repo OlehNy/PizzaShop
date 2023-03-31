@@ -1,10 +1,52 @@
 ﻿@model IEnumerable<PizzaShop.WebUI.Models.PizzaViewModel>
 @{
 	ViewData["Title"] = "Home Page";
+	IEnumerable<PizzaShop.Domain.Entities.Review> reviews = ViewBag.Reviews;
+}
+<h2>Most Popular Pizzas</h2>
+
+@if (Model.Any())
+{
+	<div class="container">
+		<div class="row">
+			@foreach (var pizza in Model)
+			{
+				<div class='card col-md-4'>
+					<img src=@pizza.ImageUrl alt=@pizza.Name>
+					<h5>@pizza.Name</h5>
+					<p>$@pizza.Price.ToString("0.00")</p>
+				</div>
+			}
+		</div>
+	</div>
+}
+else
+{
+	<p>There are no top pizzas</p>
 }
 
-<h2>Most popular pizza</h2>
-<p>Slider with most popular pizza</>
 <h2>Customer reviews</h2>
-<p>Slider with Customer reviews</>
+@if (reviews.Any())
+{
+	<div class="container">
+		<div class="row">
+			@foreach (var review in reviews)
+			{
+				<div class="col-md-6 mb-4">
+					<div class="card h-100 border-secondary shadow-sm">
+						<div class="card-body d-flex flex-column justify-content-between">
+							<p>@review.Comment</p>
+							<small><em>Reviewed on @review.ReviewData.ToShortDateString()</em></small>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+}
+else
+{
+	<p>There are no top reviews</p>
+
+}
 

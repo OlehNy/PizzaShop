@@ -11,6 +11,7 @@ namespace PizzaShop.Domain
             serviceCollection.AddScoped<IPizzaService, PizzaService>();
             serviceCollection.AddScoped<IIngredientService, IngredientService>();
             serviceCollection.AddScoped<IOrderService, OrderService>();
+            serviceCollection.AddScoped<IReviewService, ReviewService>();
         }
     }
 }
