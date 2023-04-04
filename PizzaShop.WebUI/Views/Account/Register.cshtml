@@ -1,0 +1,25 @@
+﻿@model PizzaShop.WebUI.Models.RegisterViewModel
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<form asp-controller="Account" asp-action="Register" method="post">
+	<input type="hidden" asp-for="ReturnUrl" />
+	<div>
+		<label>@Localizer["Username"]</label>
+		<input asp-for="Username" />
+		<span asp-validation-for="Username" />
+	</div>
+	<div>
+		<label>@Localizer["Password"]</label>
+		<input asp-for="Password" />
+		<span asp-validation-for="Password" />
+	</div>
+	<div>
+		<label>@Localizer["Confirm password"]</label>
+		<input asp-for="ConfirmPassword" />
+		<span asp-validation-for="ConfirmPassword" />
+	</div>
+	<div>
+		<button type="submit">@Localizer["Sign up"]</button>
+	</div>
+	<a asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
+</form>

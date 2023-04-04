@@ -41,12 +41,14 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _orderService.PayOrder(id, shippingAddress);
 
-            return RedirectToAction(nameof(OrderHistory));
+            return RedirectToAction(nameof(Index), "Review");
         }
 
         [HttpPost]
+     
         public async Task<IActionResult> AddToCart(int pizzaId, int quantity)
         {
+
             var pizza = _pizzaService.GetPizzas().FirstOrDefault(pizza => pizza.Id == pizzaId);
             await _orderService.AddOrderItemAsync(UserId.ToString(), pizza, quantity);
 

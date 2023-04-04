@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
@@ -21,32 +23,32 @@
 				<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
 					<ul class="navbar-nav flex-grow-1">
 						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">@Localizer["Home"]</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Pizza" asp-action="Index">Pizza</a>
+							<a class="nav-link text-light" asp-area="" asp-controller="Pizza" asp-action="Index">@Localizer["Pizza"]</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
+							<a class="nav-link text-light" asp-area="" asp-controller="Order" asp-action="Index">@Localizer["Order"]</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">About</a>
+							<a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="About">@Localizer["About"]</a>
 						</li>
 					</ul>
 					<ul class="navbar-nav flex-grow-2">
 						@if (User.Identity.IsAuthenticated)
 						{
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Logout">Logout</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["Logout"]</a>
 							</li>
 						}
 						else
 						{
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Login">Login</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Register">Register</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["Register"]</a>
 							</li>
 						}
 					</ul>
@@ -62,9 +64,10 @@
 
 	<footer class="border-top footer text-muted bg-dark">
 		<div class="container text-light">
-			&copy; 2023 - PizzaShop
+			@await Html.PartialAsync("_SelectLanguagePartial")
 		</div>
 	</footer>
+
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>

@@ -8,7 +8,7 @@ namespace PizzaShop.WebUI.TagHelpers
     [HtmlTargetElement("pizza-details")]
     public class PizzaDetailsTagHelper : TagHelper
     {
-        public PizzaViewModel Pizza { get; set; }
+        public PizzaViewModel? Pizza { get; set; }
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "div";
@@ -53,7 +53,7 @@ namespace PizzaShop.WebUI.TagHelpers
 
             var quantityLabel = new TagBuilder("label");
             quantityLabel.Attributes["for"] = "quantity";
-            quantityLabel.InnerHtml.Append("Quantity:");
+            quantityLabel.InnerHtml.Append("Quantity");
 
             var quantityInput = new TagBuilder("input");
             quantityInput.Attributes["type"] = "number";

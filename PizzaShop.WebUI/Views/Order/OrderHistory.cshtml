@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<PizzaShop.Domain.Entities.Order>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 @{
 	ViewData["Title"] = "Orders History";
 }
@@ -8,10 +10,10 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">OrderID</th>
-				<th scope="col">Total Price</th>
-				<th scope="col">Order Date</th>
-				<th scope="col">ShippingAddress</th>
+				<th scope="col">@Localizer["OrderID"]</th>
+				<th scope="col">@Localizer["Total Price"]</th>
+				<th scope="col">@Localizer["Order Date"]</th>
+				<th scope="col">@Localizer["ShippingAddress"]</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,5 +33,5 @@
 }
 else
 {
-	<p>History is empty</p>
+	<p>@Localizer["HistoryEmpty"]</p>
 }

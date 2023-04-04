@@ -4,6 +4,7 @@ using System.Diagnostics;
 using PizzaShop.Domain.Interfaces;
 using PizzaShop.Domain.Entities;
 using AutoMapper;
+using Microsoft.AspNetCore.Localization;
 
 namespace PizzaShop.WebUI.Controllers
 {
@@ -28,9 +29,11 @@ namespace PizzaShop.WebUI.Controllers
         public async Task<IActionResult> Index()
         {
             var topPizzas = (await _pizzaService.GetTopThreePizzas())
-                .Select(x => _mapper.Map<PizzaViewModel>(x));
+                .Select(pizza => _mapper.Map<TopPizzaViewModel>(pizza));
 
-            var reviews = _reviewService.GetReviews();
+            var reviews = _reviewService
+                .GetReviews()
+                .Select(review => _mapper.Map<ReviewViewModel>(review));
             ViewBag.Reviews = reviews;
 
             return View(topPizzas);
@@ -45,6 +48,18 @@ namespace PizzaShop.WebUI.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [HttpPost]
+        public IActionResult SetLanguage(string culture, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(culture)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) }
+            );
+
+            return LocalRedirect(returnUrl);
         }
     }
 }

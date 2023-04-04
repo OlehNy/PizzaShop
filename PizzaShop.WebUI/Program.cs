@@ -1,13 +1,30 @@
+using Microsoft.AspNetCore.Localization;
 using PizzaShop.Domain;
 using PizzaShop.Infrastructure;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddDataAnnotationsLocalization()
+    .AddViewLocalization();
 builder.Services.AddDomain();
 builder.Services.AddInfrastructure();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var suportedCulture = new[]
+    {
+        new CultureInfo("en"),
+        new CultureInfo("uk-UA")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture("uk-UA");
+    options.SupportedCultures = suportedCulture;
+    options.SupportedUICultures = suportedCulture;
+});
 
 var app = builder.Build();
 
@@ -16,6 +33,9 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.EnsureCreated();
 }
+
+
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -26,6 +46,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseRequestLocalization();
 
 app.UseRouting();
 

@@ -5,12 +5,12 @@ using System.Security.Claims;
 
 namespace PizzaShop.WebUI.Controllers
 {
-    public class AuthController : Controller
+    public class AccountController : Controller
     {
         private readonly IIdentityService _identityService;
 
 
-        public AuthController(IIdentityService identityService)
+        public AccountController(IIdentityService identityService)
         {
             _identityService = identityService;
         }
@@ -26,7 +26,7 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _identityService.AuthorizeAsync(model.Username, model.Password);
 
-            return RedirectToAction("Index", "Home");
+            return View(model.ReturnUrl);
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _identityService.CreateUserAsync(model.Username, model.Password, model.ConfirmPassword);
 
-            return RedirectToAction("Index", "Home");
+            return View(model.ReturnUrl);
         }
 
         [HttpGet]

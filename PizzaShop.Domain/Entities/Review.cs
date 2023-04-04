@@ -6,7 +6,7 @@ namespace PizzaShop.Domain.Entities
     {
         public int Id { get; set; }
         public string UserId { get; set; }
-        public DateTime ReviewData { get; set; }
+        public DateTime ReviewDate { get; set; }
         public string Comment { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace PizzaShop.Domain.Services
             {
                 UserId = userId,
                 Comment = comment,
-                ReviewData = new DataTimeService().Now
+                ReviewDate = new DataTimeService().Now
             };
 
             await _dbContext.Reviews.AddAsync(review);
