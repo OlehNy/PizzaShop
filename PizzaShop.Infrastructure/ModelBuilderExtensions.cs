@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Domain.Enum;
+using PizzaShop.Infrastructure.Identity;
 
 namespace PizzaShop.Infrastructure
 {

@@ -1,0 +1,65 @@
+﻿@model IEnumerable<PizzaShop.Domain.Entities.Order>
+@{
+	ViewData["Title"] = "Admin Panel";
+}
+
+<h1>Admin Panel</h1>
+@if (Model.Any())
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th scope="col">["OrderID"]</th>
+				<th scope="col">["Total Price"]</th>
+				<th scope="col">["Order Date"]</th>
+				<th scope="col">["ShippingAddress"]</th>
+				<th scope="col">["OrderStatus"]</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			@foreach (var order in Model)
+			{
+				<tr>
+					<td>@order.Id</td>
+					<td>@order.TotalPrice</td>
+					<td>@order.OrderDate</td>
+					<td>@order.ShippingAddress</td>
+					<td>@order.OrderStatus</td>
+					<td>
+						<select id="status-select-@order.Id">
+							<option value="Preparing">Preparing</option>
+							<option value="OutForDelivery">OutForDelivery</option>
+							<option value="Delivered">Delivered</option>
+						</select>
+						<button class="btn btn-primary" onclick="changeOrderStatus(@order.Id)">Change Status</button>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
+else
+{
+	<p>["HistoryEmpty"]</p>
+}
+
+<script>
+	function changeOrderStatus(orderId) {
+		var newStatus = document.getElementById("status-select-" + orderId).value;
+		if (newStatus != null) {
+			$.ajax({
+				type: "POST",
+				url: "/Admin/ChangeUserOrderStatus",
+				data: { orderId: orderId, orderStatus: newStatus },
+				success: function() {
+					alert("Order status updated successfully.");
+					location.reload();
+				},
+				error: function() {
+					alert("Failed to update order status.");
+				}
+			});
+		}
+	}
+</script>

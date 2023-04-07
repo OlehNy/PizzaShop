@@ -26,7 +26,7 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _identityService.AuthorizeAsync(model.Username, model.Password);
 
-            return View(model.ReturnUrl);
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace PizzaShop.WebUI.Controllers
         {
             await _identityService.CreateUserAsync(model.Username, model.Password, model.ConfirmPassword);
 
-            return View(model.ReturnUrl);
+            return View(nameof(Login));
         }
 
         [HttpGet]

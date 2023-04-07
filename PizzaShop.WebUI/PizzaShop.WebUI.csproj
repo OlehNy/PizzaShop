@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Resources\Models\PizzaViewModel.en.resx">
+    <EmbeddedResource Update="Resources\Models\PizzaModels\PizzaViewModel.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Models\PizzaViewModel.uk.resx">
+    <EmbeddedResource Update="Resources\Models\PizzaModels\PizzaViewModel.uk.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Account\Register.uk.resx">

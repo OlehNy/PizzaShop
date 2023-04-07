@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PizzaShop.Domain.Interfaces;
-using PizzaShop.Domain.Entities;
-using PizzaShop.WebUI.Models;
+using PizzaShop.Domain.Enum;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace PizzaShop.WebUI.Controllers
 {
@@ -70,5 +67,7 @@ namespace PizzaShop.WebUI.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        
     }
 }

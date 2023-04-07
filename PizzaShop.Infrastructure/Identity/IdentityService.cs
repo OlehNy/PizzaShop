@@ -7,7 +7,6 @@ namespace PizzaShop.Infrastructure.Identity
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-
         public IdentityService(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager)
         {
@@ -28,7 +27,7 @@ namespace PizzaShop.Infrastructure.Identity
         {
             var user = new ApplicationUser()
             {
-                UserName = userName
+                UserName = userName,
             };
 
             if (password != confirmPassword)
@@ -38,6 +37,10 @@ namespace PizzaShop.Infrastructure.Identity
 
             await _userManager.CreateAsync(user, password);
 
+            if (userName == "admin")
+            {
+                await _userManager.AddToRoleAsync(user, "Admin");
+            }
 
             return user.Id;
         }

@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
 using PizzaShop.Domain.Entities;
 using PizzaShop.WebUI.Models;
+using PizzaShop.WebUI.Models.PizzaModels;
 
 namespace PizzaShop.WebUI.Mappings
 {
-    public class MappingProfile : Profile
+	public class MappingProfile : Profile
     {
         public MappingProfile()
         {

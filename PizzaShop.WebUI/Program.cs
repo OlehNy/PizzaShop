@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using PizzaShop.Domain;
 using PizzaShop.Infrastructure;
@@ -32,6 +33,19 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.EnsureCreated();
+    var roleManager =
+        scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roles = new[] { "Admin", "User" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+           await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+
 }
 
 

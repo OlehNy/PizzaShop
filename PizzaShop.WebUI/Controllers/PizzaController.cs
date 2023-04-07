@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PizzaShop.Domain.Interfaces;
 using PizzaShop.Domain.Enum;
-using PizzaShop.WebUI.Models;
 using AutoMapper;
+using PizzaShop.WebUI.Models.PizzaModels;
 
 namespace PizzaShop.WebUI.Controllers
 {
-    public class PizzaController : Controller
+	public class PizzaController : Controller
     {
         private readonly IPizzaService _service;
         private readonly IMapper _mapper;

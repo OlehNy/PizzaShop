@@ -1,4 +1,5 @@
 ﻿using PizzaShop.Domain.Entities;
+using PizzaShop.Domain.Enum;
 
 namespace PizzaShop.Domain.Interfaces
 {

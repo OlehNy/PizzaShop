@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using PizzaShop.Domain.Interfaces;
+﻿using PizzaShop.Domain.Interfaces;
+using PizzaShop.Domain.Enum;
 using PizzaShop.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +49,7 @@ namespace PizzaShop.Domain.Services
             order.ShippingAddress = shippingAddress;
             order.OrderDate = new DataTimeService().Now;
             order.IsPaid = true;
+            order.OrderStatus = OrderStatus.Received;
 
             await _dbContext.SaveChangesAsync(CancellationToken.None);
 

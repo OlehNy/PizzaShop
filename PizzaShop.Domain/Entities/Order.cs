@@ -1,4 +1,6 @@
-﻿namespace PizzaShop.Domain.Entities
+﻿using PizzaShop.Domain.Enum;
+
+namespace PizzaShop.Domain.Entities
 {
     public class Order
     {
@@ -10,6 +12,7 @@
             get { return OrderItems?.Sum(item => item.Quantity * (item.Pizza?.Price ?? 0)) ?? 0; }
         }
         public bool IsPaid { get; set; }
+        public OrderStatus OrderStatus { get; set; }
         public string? ShippingAddress { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }
     }

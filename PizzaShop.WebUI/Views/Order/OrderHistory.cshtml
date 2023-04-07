@@ -14,6 +14,7 @@
 				<th scope="col">@Localizer["Total Price"]</th>
 				<th scope="col">@Localizer["Order Date"]</th>
 				<th scope="col">@Localizer["ShippingAddress"]</th>
+				<th scope="col">@Localizer["OrderStatus"]</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -25,9 +26,9 @@
 					<td>@order.TotalPrice</td>
 					<td>@order.OrderDate</td>
 					<td>@order.ShippingAddress</td>
+					<td>@order.OrderStatus</td>
 				</tr>
 			}
-
 		</tbody>
 	</table>
 }
@@ -35,3 +36,18 @@ else
 {
 	<p>@Localizer["HistoryEmpty"]</p>
 }
+
+<script>
+	function getNextOrderStatus(currentStatus) {
+		switch (currentStatus) {
+			case 'Received':
+				return 'Preparing';
+			case 'Preparing':
+				return 'OutForDelivery';
+			case 'OutForDelivery':
+				return 'Delivered';
+			default:
+				return currentStatus;
+		}
+	}
+</script>

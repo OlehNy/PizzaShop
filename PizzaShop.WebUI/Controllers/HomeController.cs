@@ -5,10 +5,11 @@ using PizzaShop.Domain.Interfaces;
 using PizzaShop.Domain.Entities;
 using AutoMapper;
 using Microsoft.AspNetCore.Localization;
+using PizzaShop.WebUI.Models.PizzaModels;
 
 namespace PizzaShop.WebUI.Controllers
 {
-    public class HomeController : Controller
+	public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPizzaService _pizzaService;

@@ -13,6 +13,7 @@ namespace PizzaShop.Domain
             serviceCollection.AddScoped<IOrderService, OrderService>();
             serviceCollection.AddScoped<IReviewService, ReviewService>();
             serviceCollection.AddScoped<IDateTime, DataTimeService>();
+            serviceCollection.AddScoped<IAdminService, AdminService>();
         }
     }
 }

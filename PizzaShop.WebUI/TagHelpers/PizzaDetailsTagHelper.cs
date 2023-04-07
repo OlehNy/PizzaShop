@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using PizzaShop.WebUI.Models;
+using PizzaShop.WebUI.Models.PizzaModels;
 using System.Globalization;
 
 namespace PizzaShop.WebUI.TagHelpers
 {
-    [HtmlTargetElement("pizza-details")]
+	[HtmlTargetElement("pizza-details")]
     public class PizzaDetailsTagHelper : TagHelper
     {
         public PizzaViewModel? Pizza { get; set; }
