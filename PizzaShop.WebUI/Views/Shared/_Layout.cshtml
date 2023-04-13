@@ -45,16 +45,16 @@
 								</li>
 							}
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">@Localizer["Logout"]</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]">@Localizer["Logout"]</a>
 							</li>
 						}
 						else
 						{
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">@Localizer["Login"]</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]">@Localizer["Login"]</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">@Localizer["Register"]</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="" asp-action="Register">@Localizer["Register"]</a>
 							</li>
 						}
 					</ul>

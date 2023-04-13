@@ -2,6 +2,7 @@
 using PizzaShop.Domain.Interfaces;
 using PizzaShop.Domain.Enum;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PizzaShop.WebUI.Controllers
 {
@@ -42,10 +43,9 @@ namespace PizzaShop.WebUI.Controllers
         }
 
         [HttpPost]
-     
+        [Authorize]
         public async Task<IActionResult> AddToCart(int pizzaId, int quantity)
         {
-
             var pizza = _pizzaService.GetPizzas().FirstOrDefault(pizza => pizza.Id == pizzaId);
             await _orderService.AddOrderItemAsync(UserId.ToString(), pizza, quantity);
 

@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PizzaShop.Domain.Entities;
 using PizzaShop.Domain.Interfaces;
 using PizzaShop.Infrastructure.Entity.TypeConfiguration;
-using PizzaShop.Infrastructure.Identity;
 
 namespace PizzaShop.Infrastructure
 {
-    public class AppDbContext : IdentityDbContext<ApplicationUser>, IAppDbContext
+    public class AppDbContext : DbContext, IAppDbContext
     {
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }

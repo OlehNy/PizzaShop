@@ -1,0 +1,27 @@
+﻿@model PizzaShop.IdentityServer.Models.LoginViewModel
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<div class="row">
+	<div class="col-md-4">
+		<form asp-controller="Auth" asp-action="Login" method="post">
+			<input type="hidden" asp-for="ReturnUrl" />
+			<div>Login</div>
+			<div class="form-group">
+				<label>Username</label>
+				<input asp-for="Username" />
+				<span aps-validation-for="Username"></span>
+			</div>
+			<div class="form-group">
+				<label>Password</label>
+				<input asp-for="Password" />
+				<span aps-validation-for="Password"></span>
+				<div>
+					<button type="submit" class="btn-block btn-lg mt-3">Sign In</button>
+				</div>
+			</div>
+			<a asp-controller="Auth" asp-action="Register"
+			   class="switch-button">Register</a>
+		</form>
+	</div>
+</div>
+
+

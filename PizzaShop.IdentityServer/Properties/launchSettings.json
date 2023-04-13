@@ -3,16 +3,16 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:31532",
-      "sslPort": 44346
+      "applicationUrl": "http://localhost:61378",
+      "sslPort": 44392
     }
   },
   "profiles": {
-    "PizzaShop.WebUI": {
+    "PizzaShop.IdentityServer": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5002",
+      "applicationUrl": "https://localhost:5001",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
