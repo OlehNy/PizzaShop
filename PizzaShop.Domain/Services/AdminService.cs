@@ -23,7 +23,7 @@ namespace PizzaShop.Domain.Services
 
             return orders;
         }
-        public async Task ChangeOrderStatus(int orderId, OrderStatus orderStatus)
+        public async Task<Order> ChangeOrderStatus(int orderId, OrderStatus orderStatus)
         {
             var order = await _dbContext.Orders.FindAsync(orderId);
 
@@ -35,6 +35,8 @@ namespace PizzaShop.Domain.Services
             order.OrderStatus = orderStatus;
 
             await _dbContext.SaveChangesAsync(CancellationToken.None);
+
+            return order;
         }
     }
 }

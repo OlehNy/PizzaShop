@@ -38,23 +38,23 @@
 					<ul class="navbar-nav flex-grow-2">
 						@if (User.Identity.IsAuthenticated)
 						{
-							@if (User.IsInRole("Admin"))
+							//@if (User.IsInRole("Admin"))
 							{
 								<li class="nav-item">
 									<a class="nav-link text-light" asp-area="" asp-controller="Admin" asp-action="Index">@Localizer["Admin Panel"]</a>
 								</li>
 							}
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]">@Localizer["Logout"]</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Logout" asp-route-returnUrl="@ViewData["ReturnUrl"]">@Localizer["Logout"]</a>
 							</li>
 						}
 						else
 						{
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]">@Localizer["Login"]</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Login" asp-route-returnUrl="@ViewData["ReturnUrl"]">@Localizer["Login"]</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link text-light" asp-area="" asp-controller="" asp-action="Register">@Localizer["Register"]</a>
+								<a class="nav-link text-light" asp-area="" asp-controller="Auth" asp-action="Register">@Localizer["Register"]</a>
 							</li>
 						}
 					</ul>
@@ -77,6 +77,19 @@
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/site.js" asp-append-version="true"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
+	<script src="~/js/signalr.js"></script>
+	<script src="~/js/Order.js"></script>
+
 	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+<script>
+	connection.start();
+
+	connection.on("Receive", function(message) {
+		alert("Your order status now is " + message);
+	});
+</script>
+

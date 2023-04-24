@@ -9,11 +9,11 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th scope="col">["OrderID"]</th>
-				<th scope="col">["Total Price"]</th>
-				<th scope="col">["Order Date"]</th>
-				<th scope="col">["ShippingAddress"]</th>
-				<th scope="col">["OrderStatus"]</th>
+				<th scope="col">OrderID</th>
+				<th scope="col">Total Price</th>
+				<th scope="col">Order Date</th>
+				<th scope="col">ShippingAddress</th>
+				<th scope="col">OrderStatus</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -21,7 +21,7 @@
 			@foreach (var order in Model)
 			{
 				<tr>
-					<td>@order.Id</td>
+					<td>@order.UserId</td>
 					<td>@order.TotalPrice</td>
 					<td>@order.OrderDate</td>
 					<td>@order.ShippingAddress</td>
@@ -43,17 +43,24 @@ else
 {
 	<p>["HistoryEmpty"]</p>
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/6.0.1/signalr.js"></script>
 
 <script>
 	function changeOrderStatus(orderId) {
-		var newStatus = document.getElementById("status-select-" + orderId).value;
+		var userId = "94a91d05-f13c-4e15-94bd-579d9b6c6707";
+		var newStatus = document.getElementById("status-select-" + orderId.toString()).value;
+
 		if (newStatus != null) {
 			$.ajax({
 				type: "POST",
 				url: "/Admin/ChangeUserOrderStatus",
 				data: { orderId: orderId, orderStatus: newStatus },
 				success: function() {
-					alert("Order status updated successfully.");
+					console.log("Status changed successfully");
+
+					connection.invoke("Receive", newStatus).catch(function(err) {
+						return console.error(err.toString());
+					});
 					location.reload();
 				},
 				error: function() {
