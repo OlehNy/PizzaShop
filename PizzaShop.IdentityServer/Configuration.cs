@@ -1,6 +1,7 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
 using IdentityModel;
+using System.Security.Claims;
 
 namespace PizzaShop.IdentityServer
 {
@@ -15,7 +16,10 @@ namespace PizzaShop.IdentityServer
         public static IEnumerable<ApiResource> GetApis()
             => new List<ApiResource>
             {
-                new ApiResource("PizzaShop"),
+                new ApiResource("PizzaShop")
+                {
+                    UserClaims = { ClaimTypes.Name, ClaimTypes.Email, ClaimTypes.Role }
+                },
             };
 
         public static IEnumerable<Client> GetClients()
@@ -28,13 +32,13 @@ namespace PizzaShop.IdentityServer
                     AllowedGrantTypes = GrantTypes.Code,
 
                     RedirectUris = { "https://localhost:5002/signin-oidc" },
-
+                    RequirePkce = true,
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
                     }
-                }
+                },
             };
 
     }

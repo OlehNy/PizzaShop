@@ -7,6 +7,8 @@ using PizzaShop.Domain;
 using PizzaShop.WebUI.Hubs;
 using PizzaShop.Infrastructure;
 using System.Globalization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +49,10 @@ builder.Services.AddAuthentication(options =>
         options.Scope.Clear();
         options.Scope.Add(OpenIdConnectScope.OpenId);
         options.Scope.Add(OpenIdConnectScope.OpenIdProfile);
+        options.GetClaimsFromUserInfoEndpoint = true;
+        options.ClaimActions.MapJsonKey("role", "role", "role");
+        options.TokenValidationParameters.NameClaimType = "name";
+        options.TokenValidationParameters.RoleClaimType = "role";
 
         options.SaveTokens = true;
     });

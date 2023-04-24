@@ -20,7 +20,7 @@ namespace PizzaShop.IdentityServer.Controllers
             (signInManager, userManager, interactionService);
 
         [HttpGet]
-        public async Task<IActionResult> Login(string returnUrl)
+        public async Task<IActionResult> Login(string returnUrl = "/")
         {
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
             var viewModel = new LoginViewModel
@@ -56,7 +56,7 @@ namespace PizzaShop.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public IActionResult Register(string returnUrl)
+        public IActionResult Register(string returnUrl = "/")
         {
             var viewModel = new RegisterViewModel
             {
@@ -89,11 +89,10 @@ namespace PizzaShop.IdentityServer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Logout(string logoutId)
+        public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            var logoutRequest = await _interactionService.GetLogoutContextAsync(logoutId);
-            return Redirect(logoutRequest.PostLogoutRedirectUri);
+            return Redirect("https://localhost:5002/Home/Index");
         }
     }
 }

@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using PizzaShop.IdentityServer;
 using PizzaShop.IdentityServer.Data;
+using Duende.IdentityServer.Services;
+using PizzaShop.IdentityServer.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 
 builder.Services.AddDbContext<AuthDbContext>(options =>
-{
-    options.UseSqlServer(connectionString);
-});
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
 {
@@ -30,6 +30,8 @@ builder.Services.AddIdentityServer()
     .AddInMemoryClients(Configuration.GetClients())
     .AddAspNetIdentity<AppUser>();
 
+builder.Services.AddScoped<IProfileService, ProfileService>();
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Auth/Login";
@@ -38,6 +40,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var user = await userManager.FindByNameAsync("Admin");
+
+    bool check = await userManager.IsInRoleAsync(user, "Admin");
+}
 
 if (!app.Environment.IsDevelopment())
 {
