@@ -1,0 +1,22 @@
+﻿@using Microsoft.Extensions.Options
+@inject IOptions<PizzaShop.WebUI.StripeSettings> Stripe
+
+@{
+	decimal totalAmount = ViewBag.TotalAmount;
+}
+<div class="text-center">
+	<form asp-action="Processing" asp-controller="Checkout" method="post">
+		<article>
+			<label>Amount: $ @totalAmount</label>
+		</article>
+		<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+			data-key="@Stripe.Value.PublishableKey"
+			data-amount="@(totalAmount * 100)"
+			data-name="PizzaShop Payment"
+			data-description="Order payments"
+			data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+			data-locale="uk"
+			data-zip-code"true">
+		</script>
+	</form>
+</div>

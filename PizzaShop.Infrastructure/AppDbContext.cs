@@ -8,6 +8,7 @@ namespace PizzaShop.Infrastructure
     public class AppDbContext : DbContext, IAppDbContext
     {
         public DbSet<Pizza> Pizzas { get; set; }
+        public DbSet<CustomPizza> CustomPizzas { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
         public DbSet<PizzaIngredient> PizzaIngredients { get; set; }
         public DbSet<Order> Orders { get; set; }

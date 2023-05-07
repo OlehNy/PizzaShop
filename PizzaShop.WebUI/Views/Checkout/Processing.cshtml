@@ -1,0 +1,22 @@
+﻿<div class="text-center">
+	<form asp-action="Processing" asp-controller="Checkout" method="post">
+		<label class="text-info">Your payment was successfully processed</label>
+		<br />
+		<br />
+		<p class="blockquote text-center">
+			The details of the transaction are <br />
+			Customer: @ViewBag.Customer <br />
+			Amount: $ @(ViewBag.AmountPaid * 100)<br />
+			ShippingAddress: @ViewBag.ShippingAddress
+		</p>
+	</form>
+	<div class="btn-group">
+		<form asp-action="Index" asp-controller="Home">
+			<button type="submit" class="btn btn-primary m-1">Back Home</button>
+		</form>
+		<form asp-action="Index" asp-controller="Review">
+			<button type="submit" class="btn btn-primary m-1">Leave review</button>
+		</form>
+	</div>
+
+</div>

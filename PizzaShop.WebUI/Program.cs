@@ -9,6 +9,8 @@ using PizzaShop.Infrastructure;
 using System.Globalization;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using PizzaShop.WebUI;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -60,8 +62,10 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllersWithViews()
     .AddDataAnnotationsLocalization()
     .AddViewLocalization();
-
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 var app = builder.Build();
+
+StripeConfiguration.ApiKey = "sk_test_4eC39HqLyjWDarjtT1zdp7dc";
 
 using (var scope = app.Services.CreateScope())
 {

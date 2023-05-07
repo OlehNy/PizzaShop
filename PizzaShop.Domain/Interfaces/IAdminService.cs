@@ -5,7 +5,7 @@ namespace PizzaShop.Domain.Interfaces
 {
     public interface IAdminService
     {
-        Task ChangeOrderStatus(int orderId, OrderStatus orderStatus);
+        Task<Order> ChangeOrderStatus(int orderId, OrderStatus orderStatus);
         IEnumerable<Order> GetUnfinishedOrders();
     }
 }

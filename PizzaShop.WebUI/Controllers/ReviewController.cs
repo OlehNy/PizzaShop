@@ -5,12 +5,9 @@ using System.Security.Claims;
 
 namespace PizzaShop.WebUI.Controllers
 {
-    public class ReviewController : Controller
+    public class ReviewController : BaseController
     {
         private readonly IReviewService _reviewService;
-        private Guid UserId => !User.Identity.IsAuthenticated
-            ? Guid.Empty
-            : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
         public ReviewController(IReviewService reviewService)
         {
             _reviewService = reviewService;

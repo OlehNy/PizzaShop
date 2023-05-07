@@ -9,6 +9,9 @@
 		<button value="Vegetable" type="button" class="btn btn-secondary" onclick="categoryFilter(this.value)">Vegetable</button>
 		<button value="Cheese" type="button" class="btn btn-secondary" onclick="categoryFilter(this.value)">Cheese</button>
 	</div>
+	<form asp-action="Index" asp-controller="PizzaBuilder">
+		<button class="btn btn-primary">Build pizza</button>
+	</form>
 	<div id="pizzaList">
 		@await Html.PartialAsync("_PizzaList", Model)
 	</div>

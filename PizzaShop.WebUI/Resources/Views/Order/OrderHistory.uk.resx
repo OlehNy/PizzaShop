@@ -120,11 +120,17 @@
   <data name="HistoryEmpty" xml:space="preserve">
     <value>Список замовлень пустий</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Товари</value>
+  </data>
   <data name="Order Date" xml:space="preserve">
     <value>Дата замовлення</value>
   </data>
   <data name="OrderID" xml:space="preserve">
     <value>Id</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>Статус замовлення</value>
   </data>
   <data name="ShippingAddress" xml:space="preserve">
     <value>Адреса доставки</value>

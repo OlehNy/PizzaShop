@@ -14,7 +14,7 @@ namespace PizzaShop.Domain.Services
             _dbContext = dbContext;
         }
 
-        public async Task AddOrderItemAsync(string userId, Pizza pizza, int quantity)
+        public async Task AddOrderItemAsync(string userId, BasePizza pizza, int quantity)
         {
             if (_dbContext.Orders.Count() == 0 || _dbContext.Orders.Last().IsPaid)
             {

@@ -15,6 +15,7 @@
 				<th scope="col">@Localizer["Order Date"]</th>
 				<th scope="col">@Localizer["ShippingAddress"]</th>
 				<th scope="col">@Localizer["OrderStatus"]</th>
+				<th scope="col">@Localizer["Items"]</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,6 +28,7 @@
 					<td>@order.OrderDate</td>
 					<td>@order.ShippingAddress</td>
 					<td>@order.OrderStatus</td>
+					<td>@string.Join(',', order.OrderItems.Select(item => item.Pizza.Name))</td>
 				</tr>
 			}
 		</tbody>

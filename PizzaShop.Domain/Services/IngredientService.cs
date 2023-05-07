@@ -48,5 +48,19 @@ namespace PizzaShop.Domain.Services
             _dbContext.Ingredients.Update(ingredient);
             await _dbContext.SaveChangesAsync(CancellationToken.None);
         }
+        public IEnumerable<Ingredient> GetIngredientsByNames(List<string> names)
+		{
+            List<Ingredient> ingredients = new();
+
+            foreach (var item in names)
+			{
+                var ingredient = _dbContext
+                    .Ingredients.FirstOrDefault(ingredient => ingredient.Name == item);
+                ingredients.Add(ingredient);
+			}
+
+            return ingredients;
+		}
+
     }
 }

@@ -61,7 +61,7 @@ namespace PizzaShop.Domain.Services
             return filtredPizzas;
         }
 
-        public async Task AddIngredientToPizza(Pizza pizza, Ingredient ingredient)
+        public async Task AddIngredientToPizza(CustomPizza pizza, Ingredient ingredient)
         {
             if (ingredient == null)
             {
@@ -76,11 +76,17 @@ namespace PizzaShop.Domain.Services
             await _dbContext.SaveChangesAsync(CancellationToken.None);
         }
 
-        public async Task AddIngredientToPizza(Pizza pizza, IEnumerable<Ingredient> ingredients)
+        public async Task AddIngredientToPizza(CustomPizza pizza, IEnumerable<Ingredient> ingredients)
         {
             if (ingredients == null)
             {
                 throw new ArgumentNullException(nameof(ingredients));
+            }
+
+            if (_dbContext.CustomPizzas.Find(pizza.Id) == null)
+            {
+                await _dbContext.CustomPizzas.AddAsync(pizza);
+                await _dbContext.SaveChangesAsync(CancellationToken.None);
             }
 
             List<PizzaIngredient> pizzaIngredients = new List<PizzaIngredient>();
@@ -115,7 +121,7 @@ namespace PizzaShop.Domain.Services
                                        .OrderByDescending(p => p.SalesCount)
                                        .Take(3);
 
-            return await pizzaSales.Select(p => p.PizzaObj).ToListAsync();
+            return await pizzaSales.Select(p => p.PizzaObj).OfType<Pizza>().ToListAsync();
         }
     }
 }

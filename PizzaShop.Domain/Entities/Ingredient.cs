@@ -7,8 +7,6 @@
         public ICollection<PizzaIngredient>? PizzaIngredients { get; set; }
 
         public override string ToString()
-        {
-            return Name;
-        }
+            => Name;
     }
 }

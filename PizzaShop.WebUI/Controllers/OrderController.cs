@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PizzaShop.Domain.Interfaces;
-using PizzaShop.Domain.Enum;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
 namespace PizzaShop.WebUI.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         private readonly IPizzaService _pizzaService;
         private readonly IOrderService _orderService;
-        private Guid UserId => !User.Identity.IsAuthenticated
-            ? Guid.Empty
-            : Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
         public OrderController(IOrderService service,
             IPizzaService pizzaService)
         {
@@ -32,14 +29,6 @@ namespace PizzaShop.WebUI.Controllers
             return View(_orderService
                 .GetAllOrders(UserId.ToString())
                 .Where(order => order.IsPaid));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> PayOrder(int id, string shippingAddress)
-        {
-            await _orderService.PayOrder(id, shippingAddress);
-
-            return RedirectToAction(nameof(Index), "Review");
         }
 
         [HttpPost]
@@ -67,7 +56,5 @@ namespace PizzaShop.WebUI.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
-        
     }
 }

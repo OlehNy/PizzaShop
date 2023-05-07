@@ -1,0 +1,162 @@
+﻿@model PizzaShop.Domain.Entities.CustomPizza
+
+@{
+	List<PizzaShop.Domain.Entities.Ingredient> ingredients = ViewBag.Ingredients;
+}
+
+
+<p>
+	@foreach (var ingredient in ingredients)
+	{
+		<input type="checkbox" name="Ingredients" value="@ingredient.Name" id="@ingredient.Id" />
+		<label for="@ingredient.Id">@ingredient.Name</label>
+		<br />
+	}
+</p>
+<label for="quantity">Quantity:</label>
+<input type="number" name="Quantity" value="1" min="1" />
+<br />
+<button type="submit" onclick="buildPizza()">Add to Order</button>
+
+<canvas id="pizza-canvas" width="500" height="500"></canvas>
+
+<script>
+	const canvas = document.getElementById('pizza-canvas');
+	const ctx = canvas.getContext('2d');
+
+	const pizzaWidth = 300;
+	const pizzaHeight = 300;
+
+	let selectedIngredients = [];
+
+	function updatePizza() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+		ctx.beginPath();
+		ctx.arc(canvas.width / 2, canvas.height / 2, pizzaWidth / 2, 0, Math.PI * 2);
+		ctx.fillStyle = '#FFDAB9';
+		ctx.fill();
+		ctx.closePath();
+
+		ctx.beginPath();
+		ctx.arc(canvas.width / 2, canvas.height / 2, pizzaWidth / 2, 0, Math.PI * 2);
+		ctx.strokeStyle = '#D17B2E';
+		ctx.lineWidth = 10;
+		ctx.stroke();
+		ctx.closePath();
+
+		const numSlices = 6;
+		for (let i = 0; i < numSlices; i++) {
+			const angle = (Math.PI * 2 * i) / numSlices;
+			const startX = canvas.width / 2;
+			const startY = canvas.height / 2;
+			const endX = startX + Math.cos(angle) * (pizzaWidth / 2);
+			const endY = startY + Math.sin(angle) * (pizzaHeight / 2);
+			ctx.beginPath();
+			ctx.moveTo(startX, startY);
+			ctx.lineTo(endX, endY);
+			ctx.strokeStyle = "black";
+			ctx.lineWidth = 1;
+			ctx.stroke();
+			ctx.closePath();
+		}
+
+		const ingredientProperties = {
+			Cheese: {
+				color: '#F0E68C',
+				size: 15,
+				dist: 20
+			},
+			Mushroom: {
+				color: '#CD5C5C',
+				size: 12,
+				dist: 30
+			},
+			Sausage: {
+				color: '#8B4513',
+				size: 18,
+				dist: 40
+
+
+			},
+			Peppers: {
+				color: '#7FFF00',
+				size: 14,
+				dist: 50
+			},
+			Olives: {
+				color: '#808000',
+				size: 11,
+				dist: 60
+			},
+			Tuna: {
+				color: '#00BFFF',
+				size: 16,
+				dist: 70
+			}
+		};
+		// Add ingredient to pizza
+		const sliceAngle = (Math.PI * 2) / numSlices;
+		selectedIngredients.forEach((ingredient, index) => {
+			const ingredientProps = ingredientProperties[ingredient];
+			const ingredientColor = ingredientProps.color;
+			const ingredientSize = ingredientProps.size;
+			const dist = ingredientProps.dist;
+			const numIngredients = ingredientProps.number || numSlices;
+			for (let i = 0; i < numIngredients; i++) {
+				const angle = sliceAngle * i + sliceAngle / (2 * numIngredients) + index * sliceAngle;
+				const radius = (pizzaWidth / 2 - 20) - dist;
+				const centerX = canvas.width / 2;
+				const centerY = canvas.height / 2;
+				const x = centerX + Math.cos(angle) * radius;
+				const y = centerY + Math.sin(angle) * radius;
+
+				ctx.beginPath();
+				ctx.arc(x, y, ingredientSize, 0, Math.PI * 2);
+				ctx.fillStyle = ingredientColor;
+				ctx.fill();
+				ctx.closePath();
+			}
+		});
+	}
+
+	const ingredientCheckboxes = document.querySelectorAll('input[name="Ingredients"]');
+
+	ingredientCheckboxes.forEach(checkbox => {
+		checkbox.addEventListener('change', event => {
+			if (event.target.checked) {
+				selectedIngredients.push(event.target.value);
+				updatePizza();
+			} else {
+				selectedIngredients = selectedIngredients.filter(ingredient => ingredient !== event.target.value);
+				updatePizza();
+			}
+		});
+	});
+	function buildPizza() {
+		var ingredients = [];
+		var checkboxes = document.getElementsByName("Ingredients");
+
+		for (var i = 0; i < checkboxes.length; i++) {
+			if (checkboxes[i].checked) {
+				ingredients.push(checkboxes[i].value);
+			}
+		}
+
+		var quantity = document.getElementsByName("Quantity")[0].value;
+
+		$.ajax({
+			type: "POST",
+			url: "/PizzaBuilder/Build",
+			data: { ingredientsNames: ingredients, quantity: quantity },
+			success: function() {
+                alert("Added to order");
+			},
+			error: function() {
+				alert("Failed!");
+			}
+		});
+	}
+	const addToOrderButton = document.querySelector('button[type="submit"]');
+
+</script>

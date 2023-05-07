@@ -120,11 +120,17 @@
   <data name="HistoryEmpty" xml:space="preserve">
     <value>History is empty</value>
   </data>
+  <data name="Items" xml:space="preserve">
+    <value>Items</value>
+  </data>
   <data name="Order Date" xml:space="preserve">
     <value>Order Date</value>
   </data>
   <data name="OrderID" xml:space="preserve">
     <value>OrderID</value>
+  </data>
+  <data name="OrderStatus" xml:space="preserve">
+    <value>Status</value>
   </data>
   <data name="ShippingAddress" xml:space="preserve">
     <value>ShippingAddress</value>
