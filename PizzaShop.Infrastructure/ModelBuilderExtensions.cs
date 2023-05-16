@@ -15,7 +15,7 @@ namespace PizzaShop.Infrastructure
                         Id = 1,
                         Name = "Pizza #1",
                         ImageUrl = "https://i.imgur.com/Uc8avMV.jpeg",
-                        Price = 100,
+                        Price = 8.5M,
                         Category = Category.Meat
                     },
                     new Pizza()
@@ -23,7 +23,7 @@ namespace PizzaShop.Infrastructure
                         Id = 2,
                         Name = "Pizza #2",
                         ImageUrl = "https://i.imgur.com/mH8v2Oj.jpeg",
-                        Price = 110,
+                        Price = 9M,
                         Category = Category.Seafood
                     },
                     new Pizza()
@@ -31,7 +31,7 @@ namespace PizzaShop.Infrastructure
                         Id = 3,
                         Name = "Pizza #3",
                         ImageUrl = "https://i.imgur.com/aiv72w8.jpeg",
-                        Price = 125,
+                        Price = 10M,
                         Category = Category.Vegetable
                     });
 
@@ -41,31 +41,43 @@ namespace PizzaShop.Infrastructure
                 {
                     Id = 1,
                     Name = "Cheese",
+                    Cost = 2.99M, 
+                    Calories = 300
                 },
                 new Ingredient()
                 {
                     Id = 2,
-                    Name = "Mushroom"
+                    Name = "Mushroom",
+                    Cost = 1.5M, 
+                    Calories = 20
                 },
                 new Ingredient()
                 {
                     Id = 3,
-                    Name = "Sausage"
+                    Name = "Sausage",
+                    Cost = 3.49M, 
+                    Calories = 250
                 },
                 new Ingredient()
                 {
                     Id = 4,
-                    Name = "Peppers"
+                    Name = "Peppers",
+                    Cost = 0.99M, 
+                    Calories = 30
                 },
                 new Ingredient()
                 {
                     Id = 5,
-                    Name = "Olives"
+                    Name = "Olives",
+                    Cost = 1.79M, 
+                    Calories = 150
                 },
                 new Ingredient()
                 {
                     Id = 6,
-                    Name = "Tuna"
+                    Name = "Tuna",
+                    Cost = 2.49M, 
+                    Calories = 120
                 });
 
             builder.Entity<PizzaIngredient>()

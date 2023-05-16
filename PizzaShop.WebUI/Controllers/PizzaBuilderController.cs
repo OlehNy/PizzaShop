@@ -29,12 +29,12 @@ namespace PizzaShop.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Build(string[] ingredientsNames, int quantity)
+        public async Task<IActionResult> Build(string[] ingredientsNames, int quantity, decimal totalCost)
         {
             var ingredients = _ingredientService.GetIngredientsByNames(ingredientsNames.ToList());
             var customPizza = new CustomPizza()
             {
-                Price = 100,
+                Price = totalCost,
             };
 
             await _pizzaService.AddIngredientToPizza(customPizza, ingredients);

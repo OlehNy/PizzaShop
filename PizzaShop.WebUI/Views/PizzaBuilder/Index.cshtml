@@ -10,12 +10,15 @@
 	{
 		<input type="checkbox" name="Ingredients" value="@ingredient.Name" id="@ingredient.Id" />
 		<label for="@ingredient.Id">@ingredient.Name</label>
-		<br />
+	<p>Calories: <span value="@ingredient.Calories" id="calories-@ingredient.Name">@ingredient.Calories</span></p>
+	<p>Cost: <span value="@ingredient.Cost" id="cost-@ingredient.Name">@ingredient.Cost</span></p>
 	}
 </p>
 <label for="quantity">Quantity:</label>
 <input type="number" name="Quantity" value="1" min="1" />
 <br />
+<p>Total Cost: $<span id="total-cost">0.00</span></p>
+<p>Total Calories: <span id="total-calories">0.00</span></p>
 <button type="submit" onclick="buildPizza()">Add to Order</button>
 
 <canvas id="pizza-canvas" width="500" height="500"></canvas>
@@ -23,6 +26,9 @@
 <script>
 	const canvas = document.getElementById('pizza-canvas');
 	const ctx = canvas.getContext('2d');
+
+	let totalCost = 0;
+	let totalCalories = 0;
 
 	const pizzaWidth = 300;
 	const pizzaHeight = 300;
@@ -124,13 +130,30 @@
 
 	ingredientCheckboxes.forEach(checkbox => {
 		checkbox.addEventListener('change', event => {
+            const cost = parseFloat(document.getElementById("cost-" + event.target.value).innerText);
+            const calories = parseFloat(document.getElementById("calories-" + event.target.value).innerText);
+			var quantity = document.getElementsByName("Quantity")[0].value;
+			
 			if (event.target.checked) {
 				selectedIngredients.push(event.target.value);
+
+                totalCalories += calories;
+                totalCost += cost;
+
+                console.log(totalCost);
+
 				updatePizza();
 			} else {
 				selectedIngredients = selectedIngredients.filter(ingredient => ingredient !== event.target.value);
+
+				totalCalories -= calories;
+                totalCost -= cost;
+
 				updatePizza();
 			}
+
+			document.getElementById('total-cost').innerText = totalCost.toFixed(2) * quantity;
+			document.getElementById('total-calories').innerText = totalCalories.toFixed(2) * quantity;
 		});
 	});
 	function buildPizza() {
@@ -148,9 +171,9 @@
 		$.ajax({
 			type: "POST",
 			url: "/PizzaBuilder/Build",
-			data: { ingredientsNames: ingredients, quantity: quantity },
+			data: { ingredientsNames: ingredients, quantity: quantity, totalCost: totalCost },
 			success: function() {
-                alert("Added to order");
+				alert("Added to order");
 			},
 			error: function() {
 				alert("Failed!");

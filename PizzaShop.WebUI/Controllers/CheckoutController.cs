@@ -22,6 +22,7 @@ namespace PizzaShop.WebUI.Controllers
 
             ViewBag.TotalAmount = order.TotalPrice;
             TotalAmount = order.TotalPrice.ToString();
+            TotalAmount = Convert.ToInt32(order.TotalPrice * 100).ToString();
 
             return View();
         }
@@ -39,7 +40,7 @@ namespace PizzaShop.WebUI.Controllers
             Customer customer = serviceCust.Create(optionsCust);
             var optionsCharge = new ChargeCreateOptions
             {
-                Amount = Convert.ToInt32(TempData["TotalAmount"]),
+                Amount = Convert.ToInt32(TotalAmount),
                 Source = stripeToken,
                 Currency = "NZD",
                 ReceiptEmail = stripeEmail,
@@ -49,7 +50,7 @@ namespace PizzaShop.WebUI.Controllers
 
             var serviceCharge = new ChargeService();
             Charge charge = serviceCharge.Create(optionsCharge);
-            if (charge.Status  == "succeeded")
+            if (charge.Status == "succeeded")
             {
                 var order = _orderService.GetAllOrders(UserId.ToString())
                     .FirstOrDefault(x => !x.IsPaid);
@@ -61,7 +62,7 @@ namespace PizzaShop.WebUI.Controllers
                 ViewBag.ShippingAddress = "Lviv";
             }
 
-            return View();  
+            return View();
         }
     }
 }
